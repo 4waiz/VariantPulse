@@ -102,11 +102,19 @@ npm run dev
 Open <http://localhost:3000>.
 
 ```bash
-npm run build       # production build
-npm run type-check  # tsc --noEmit
-npm run lint        # eslint
-npm run evidence:refresh   # re-pull the ClinVar snapshot
+npm run build             # production build
+npm run type-check        # tsc --noEmit
+npm run lint              # eslint
+npm run verify:data       # data coherence checks (see below)
+npm run evidence:refresh  # re-pull the ClinVar snapshot
 ```
+
+`verify:data` checks what the type system cannot: that every monitored variant is
+backed by a real evidence record, that no patient points at a variant outside the
+panel, and — most importantly — that no variant is presented as reclassified when
+the source last evaluated it *before* the report it is supposed to have superseded.
+A case built on that premise would be false, and it is the kind of error that reads
+as plausible right up until a clinician checks it.
 
 No environment variables are required. VariantPulse reads public endpoints that need no key, and
 works fully offline against its bundled evidence snapshot.
