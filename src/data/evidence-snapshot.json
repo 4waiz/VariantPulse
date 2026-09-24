@@ -1,61 +1,47 @@
 {
-  "generatedAt": "2026-09-24T20:50:35.016Z",
+  "generatedAt": "2026-09-24T21:34:10.667Z",
   "source": "NCBI ClinVar (E-utilities)",
   "sourceUrl": "https://www.ncbi.nlm.nih.gov/clinvar/",
   "recordCount": 12,
   "records": {
-    "BRCA1:c.5309G>T": {
-      "clinvarId": "417832",
-      "accession": "VCV000417832",
-      "title": "NM_007294.4(BRCA1):c.5309G>T (p.Gly1770Val)",
+    "BRCA1:c.5522G>T": {
+      "clinvarId": "869004",
+      "accession": "VCV000869004",
+      "title": "NM_007294.4(BRCA1):c.5522G>T (p.Ser1841Ile)",
       "gene": "BRCA1",
-      "cdnaChange": "c.5309G>T",
+      "cdnaChange": "c.5522G>T",
       "variantType": "single nucleotide variant",
       "molecularConsequence": "missense variant",
-      "proteinChange": "G1770V",
-      "rsid": "rs863224765",
-      "classification": "Pathogenic",
-      "reviewStatus": "reviewed by expert panel",
-      "lastEvaluated": "2018-07-18",
+      "proteinChange": "S1794I",
+      "rsid": "rs80357368",
+      "classification": "Likely pathogenic",
+      "reviewStatus": "criteria provided, multiple submitters, no conflicts",
+      "lastEvaluated": "2025-11-06",
       "fdaRecognised": false,
-      "submissionCount": 15,
+      "submissionCount": 3,
       "conditions": [
-        "Breast-ovarian cancer, familial, susceptibility to, 1"
+        "Hereditary breast ovarian cancer syndrome",
+        "Inherited breast cancer and ovarian cancer"
       ],
       "location": {
         "assembly": "GRCh38",
         "chr": "17",
         "band": "17q21.31",
-        "start": "43051086",
-        "stop": "43051086"
+        "start": "43045748",
+        "stop": "43045748"
       },
-      "peakAlleleFrequency": {
-        "value": 0,
-        "source": "The Genome Aggregation Database (gnomAD), exomes"
-      },
+      "peakAlleleFrequency": null,
       "citations": [
-        {
-          "pmid": "35802134",
-          "title": "ACMG SF v3.1 list for reporting of secondary findings in clinical exome and genome sequencing: A policy statement of the American College of Medical Genetics and Genomics (ACMG).",
-          "journal": "Genet Med",
-          "year": "2022"
-        },
-        {
-          "pmid": "34242744",
-          "title": "Customizing local and systemic therapies for women with early breast cancer: the St. Gallen International Consensus Guidelines for treatment of early breast cancer 2021.",
-          "journal": "Ann Oncol",
-          "year": "2021"
-        },
-        {
-          "pmid": "34012068",
-          "title": "ACMG SF v3.0 list for reporting of secondary findings in clinical exome and genome sequencing: a policy statement of the American College of Medical Genetics and Genomics (ACMG).",
-          "journal": "Genet Med",
-          "year": "2021"
-        },
         {
           "pmid": "33410258",
           "title": "Risk assessment and genetic counseling for hereditary breast and ovarian cancer syndromes-Practice resource of the National Society of Genetic Counselors.",
           "journal": "J Genet Couns",
+          "year": "2021"
+        },
+        {
+          "pmid": "32885271",
+          "title": "Multigene panel testing for hereditary breast and ovarian cancer in the province of Ontario.",
+          "journal": "J Cancer Res Clin Oncol",
           "year": "2021"
         },
         {
@@ -65,22 +51,34 @@
           "year": "2019"
         },
         {
-          "pmid": "31479144",
-          "title": "Medication Use to Reduce Risk of Breast Cancer: US Preventive Services Task Force Recommendation Statement.",
-          "journal": "JAMA",
-          "year": "2019"
-        },
-        {
           "pmid": "31429903",
           "title": "Risk Assessment, Genetic Counseling, and Genetic Testing for BRCA-Related Cancer: US Preventive Services Task Force Recommendation Statement.",
           "journal": "JAMA",
           "year": "2019"
         },
         {
-          "pmid": "31368036",
-          "title": "The yield of full BRCA1/2 genotyping in Israeli Arab high-risk breast/ovarian cancer patients.",
-          "journal": "Breast Cancer Res Treat",
-          "year": "2019"
+          "pmid": "30209399",
+          "title": "Accurate classification of BRCA1 variants with saturation genome editing.",
+          "journal": "Nature",
+          "year": "2018"
+        },
+        {
+          "pmid": "28492532",
+          "title": "Sherloc: a comprehensive refinement of the ACMG-AMP variant classification criteria.",
+          "journal": "Genet Med",
+          "year": "2017"
+        },
+        {
+          "pmid": "27854360",
+          "title": "Recommendations for reporting of secondary findings in clinical exome and genome sequencing, 2016 update (ACMG SF v2.0): a policy statement of the American College of Medical Genetics and Genomics.",
+          "journal": "Genet Med",
+          "year": "2017"
+        },
+        {
+          "pmid": "26389258",
+          "title": "Cancer Genetics Risk Assessment and Counseling (PDQ®): Health Professional Version.",
+          "journal": "",
+          "year": "2002"
         }
       ]
     },

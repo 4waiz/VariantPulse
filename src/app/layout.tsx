@@ -24,7 +24,6 @@ export const metadata: Metadata = {
   description:
     "VariantPulse continuously monitors historical genomic findings against evolving scientific evidence and identifies when old patient records may require clinical review.",
   applicationName: "VariantPulse",
-  icons: { icon: "/logo.png", apple: "/logo.png" },
 };
 
 export const viewport: Viewport = {

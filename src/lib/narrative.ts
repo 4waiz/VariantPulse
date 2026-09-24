@@ -72,7 +72,7 @@ export function composeEvidenceSummary(input: SummaryInput): string {
     case "CLASSIFICATION_DRIFT": {
       const intoActionable = after.band === "pathogenic";
       sentences.push(
-        `Since the ${reportedYear} report, ${submissionPhrase(evidence.submissionCount)} and ${confidence.label.toLowerCase()} have moved the consensus for ${label} from ${before.label.toLowerCase()} to ${after.label.toLowerCase()}.`,
+        `Since the ${reportedYear} report, the consensus for ${label} has moved from ${before.label.toLowerCase()} to ${after.label.toLowerCase()}. That reading rests on ${submissionPhrase(evidence.submissionCount)} at ${confidence.strength.toLowerCase()} review confidence — ${confidence.label.toLowerCase()}.`,
       );
       sentences.push(
         intoActionable

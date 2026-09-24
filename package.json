@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "type-check": "tsc --noEmit",
-    "evidence:refresh": "node scripts/refresh-evidence.mjs"
+    "evidence:refresh": "node scripts/refresh-evidence.mjs",
+    "verify:data": "node scripts/verify-data.mjs"
   },
   "dependencies": {
     "clsx": "^2.1.1",

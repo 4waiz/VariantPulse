@@ -204,15 +204,23 @@ export async function fetchCurrentEvidence(options?: { force?: boolean }): Promi
     if (!result) return cachedResult("ClinVar returned an unexpected payload");
 
     const records: Record<string, EvidenceRecord> = {};
+    let missing = false;
     for (const variant of MONITORED_VARIANTS) {
       const raw = result[variant.clinvarId];
       const fallback = SNAPSHOT.records[variant.key];
       const shaped = raw ? shape(raw, fallback) : null;
-      records[variant.key] = shaped ?? fallback;
+      const record = shaped ?? fallback;
+      // A variant with neither a live record nor a snapshot entry means the
+      // panel and the snapshot have drifted apart. Never serve a hole.
+      if (!record) {
+        missing = true;
+        break;
+      }
+      records[variant.key] = record;
     }
 
     // A partial response is not a live read. Fall back rather than mix sources.
-    if (Object.values(records).some((r) => !r)) {
+    if (missing) {
       return cachedResult("ClinVar response was incomplete");
     }
 
