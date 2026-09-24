@@ -154,13 +154,21 @@
 @keyframes vp-spin {
   to { transform: rotate(360deg); }
 }
+@keyframes vp-helix-turn {
+  to { transform: translateY(var(--vp-pitch, 0)); }
+}
 
 .vp-rise { animation: vp-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .vp-fade { animation: vp-fade 0.45s ease both; }
 .vp-drift { animation: vp-drift 7s ease-in-out infinite; }
 .vp-spin { animation: vp-spin 1s linear infinite; }
+/* Slides the helix by exactly one turn, which reads as continuous rotation. */
+.vp-helix { animation: vp-helix-turn 11s linear infinite; }
 
 @media (prefers-reduced-motion: reduce) {
+  /* The helix rests at phase zero rather than snapping to the loop end. */
+  .vp-helix { animation: none !important; }
+
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;

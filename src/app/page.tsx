@@ -42,7 +42,7 @@ export default function HomePage() {
   return (
     <div className="px-5 pb-12 sm:px-6 lg:px-8">
       {/* ── Hero ───────────────────────────────────────────────────────── */}
-      <section className="grid gap-6 xl:grid-cols-[minmax(0,430px)_minmax(0,1fr)_minmax(0,264px)] xl:gap-5">
+      <section className="grid gap-6 xl:grid-cols-[minmax(0,430px)_minmax(0,1fr)_minmax(0,232px)] xl:gap-5">
         <div className="pt-4 xl:pt-10">
           <Eyebrow>Monitoring genetic knowledge</Eyebrow>
           <h1 className="mt-4 text-[34px] font-semibold leading-[1.06] tracking-[-0.032em] text-ink sm:text-[40px] 2xl:text-[44px]">
@@ -106,7 +106,7 @@ export default function HomePage() {
         </div>
 
         {/* Centre composition */}
-        <div className="relative min-h-[430px] xl:min-h-[620px]">
+        <div className="relative min-h-[460px] xl:min-h-[700px]">
           {lead ? (
             <div className="vp-float absolute left-1/2 top-2 z-10 flex w-[min(340px,92%)] -translate-x-1/2 items-center gap-3 px-4 py-3">
               <StatusDot tone="neutral" pulse />
@@ -124,7 +124,8 @@ export default function HomePage() {
             </div>
           ) : null}
 
-          <EvidencePipeline className="absolute inset-0" />
+          {/* Bleeds into the column gaps so the helix reads at full scale. */}
+          <EvidencePipeline className="absolute inset-0 xl:inset-y-0 xl:-left-10 xl:-right-10 xl:h-auto xl:w-auto" />
         </div>
 
         {/* Sources */}
