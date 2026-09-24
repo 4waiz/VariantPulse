@@ -93,7 +93,7 @@ export function Sidebar() {
           <span className="block text-[16.5px] font-semibold leading-none tracking-tight text-ink">
             VariantPulse
           </span>
-          <span className="mt-1 block text-[10.5px] font-medium uppercase leading-none tracking-[0.1em] text-faint">
+          <span className="mt-[5px] block whitespace-nowrap text-[10.5px] font-medium leading-none text-faint">
             Genomic Change Intelligence
           </span>
         </span>
@@ -121,7 +121,7 @@ export function Sidebar() {
 
       <div className="px-3 pb-3">
         <Link
-          href="/variants/BRCA1:c.5309G>T"
+          href="/variants/BRCA1:c.5522G>T"
           className="group relative block overflow-hidden rounded-2xl border border-line bg-gradient-to-b from-[#EEF0FF] to-[#F7F4FF] p-4 transition-shadow hover:shadow-[0_10px_28px_-18px_rgba(40,42,120,0.5)]"
         >
           <HelixMotif className="pointer-events-none absolute -right-3 -top-4 h-28 w-24 opacity-70" />

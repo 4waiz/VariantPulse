@@ -9,13 +9,15 @@
 
 import { cn } from "@/lib/utils";
 
-const WIDTH = 560;
-const HEIGHT = 600;
-const CENTRE = 268;
+// The viewBox aspect is tuned to the column the composition sits in, so the
+// artwork fills its space instead of letterboxing inside it.
+const WIDTH = 420;
+const HEIGHT = 660;
+const CENTRE = 200;
 
-const HELIX_TOP = 26;
-const HELIX_BOTTOM = 300;
-const AMPLITUDE = 46;
+const HELIX_TOP = 38;
+const HELIX_BOTTOM = 352;
+const AMPLITUDE = 54;
 const TURNS = 2.6;
 
 function helixPath(phase: number): string {
@@ -65,9 +67,9 @@ interface Stage {
 }
 
 const STAGES: Stage[] = [
-  { label: "New evidence", y: 348, rx: 150, ry: 38, hue: "#6366F1", delay: "0s" },
-  { label: "Analysis", y: 436, rx: 172, ry: 43, hue: "#7C6BEA", delay: "0.5s" },
-  { label: "Affected patients", y: 528, rx: 194, ry: 48, hue: "#A855F7", delay: "1s" },
+  { label: "New evidence", y: 404, rx: 118, ry: 31, hue: "#6366F1", delay: "0s" },
+  { label: "Analysis", y: 500, rx: 139, ry: 36, hue: "#7C6BEA", delay: "0.5s" },
+  { label: "Affected patients", y: 596, rx: 160, ry: 41, hue: "#A855F7", delay: "1s" },
 ];
 
 export function EvidencePipeline({ className }: { className?: string }) {
@@ -119,16 +121,16 @@ export function EvidencePipeline({ className }: { className?: string }) {
       {/* Ambient wash behind the whole composition. */}
       <ellipse
         cx={CENTRE}
-        cy={430}
-        rx={230}
-        ry={165}
+        cy={492}
+        rx={192}
+        ry={172}
         fill="#6366F1"
         opacity="0.07"
         filter="url(#vp-soft)"
       />
 
       {/* The column of light linking the helix to the stack. */}
-      <rect x={CENTRE - 38} y={120} width={76} height={420} fill="url(#vp-column)" />
+      <rect x={CENTRE - 36} y={150} width={72} height={450} fill="url(#vp-column)" />
 
       {/* Stacked stages, back to front. */}
       {STAGES.map((stage, index) => (
@@ -174,7 +176,7 @@ export function EvidencePipeline({ className }: { className?: string }) {
             y={stage.y + 4}
             textAnchor="middle"
             className="fill-ink-2"
-            style={{ font: "500 13px var(--font-inter), sans-serif", letterSpacing: "0.01em" }}
+            style={{ font: "500 12px var(--font-inter), sans-serif", letterSpacing: "0.01em" }}
           >
             {stage.label}
           </text>
@@ -200,7 +202,7 @@ export function EvidencePipeline({ className }: { className?: string }) {
             x2={rung.x2}
             y2={rung.y}
             stroke="#8B93F2"
-            strokeWidth={1.1 + rung.depth * 1.1}
+            strokeWidth={1.2 + rung.depth * 1.3}
             strokeLinecap="round"
             opacity={0.2 + rung.depth * 0.45}
           />
@@ -209,28 +211,28 @@ export function EvidencePipeline({ className }: { className?: string }) {
           d={helixPath(0)}
           fill="none"
           stroke="url(#vp-strand-a)"
-          strokeWidth="3.4"
+          strokeWidth="4.2"
           strokeLinecap="round"
         />
         <path
           d={helixPath(Math.PI)}
           fill="none"
           stroke="url(#vp-strand-b)"
-          strokeWidth="3.4"
+          strokeWidth="4.2"
           strokeLinecap="round"
         />
       </g>
 
       {/* Evidence arriving from the sources on the right. */}
       {[
-        { y: 150, curve: 86 },
-        { y: 214, curve: 60 },
-        { y: 278, curve: 40 },
-        { y: 336, curve: 24 },
+        { y: 168, curve: 82 },
+        { y: 244, curve: 58 },
+        { y: 316, curve: 38 },
+        { y: 382, curve: 20 },
       ].map((line, index) => (
         <g key={line.y}>
           <path
-            d={`M ${WIDTH - 6} ${line.y} C ${WIDTH - 120} ${line.y}, ${CENTRE + line.curve + 70} ${348}, ${CENTRE + line.curve} ${348}`}
+            d={`M ${WIDTH - 4} ${line.y} C ${WIDTH - 110} ${line.y}, ${CENTRE + line.curve + 64} ${404}, ${CENTRE + line.curve} ${404}`}
             fill="none"
             stroke="#94A3F5"
             strokeOpacity="0.4"
@@ -241,7 +243,7 @@ export function EvidencePipeline({ className }: { className?: string }) {
               dur="4.5s"
               begin={`${index * 0.9}s`}
               repeatCount="indefinite"
-              path={`M ${WIDTH - 6} ${line.y} C ${WIDTH - 120} ${line.y}, ${CENTRE + line.curve + 70} ${348}, ${CENTRE + line.curve} ${348}`}
+              path={`M ${WIDTH - 4} ${line.y} C ${WIDTH - 110} ${line.y}, ${CENTRE + line.curve + 64} ${404}, ${CENTRE + line.curve} ${404}`}
             />
             <animate
               attributeName="opacity"
@@ -256,12 +258,12 @@ export function EvidencePipeline({ className }: { className?: string }) {
 
       {/* Records flowing out to the left, toward the patient panel. */}
       {[
-        { y: 470, curve: -120 },
-        { y: 520, curve: -150 },
+        { y: 538, curve: -100 },
+        { y: 600, curve: -132 },
       ].map((line, index) => (
         <path
           key={line.y}
-          d={`M ${CENTRE + line.curve} ${line.y} C ${CENTRE + line.curve - 80} ${line.y}, 90 ${line.y + 20}, 18 ${line.y + 26}`}
+          d={`M ${CENTRE + line.curve} ${line.y} C ${CENTRE + line.curve - 70} ${line.y}, 70 ${line.y + 14}, 10 ${line.y + 18}`}
           fill="none"
           stroke="#A855F7"
           strokeOpacity={0.24 - index * 0.06}

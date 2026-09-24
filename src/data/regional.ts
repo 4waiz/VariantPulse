@@ -119,7 +119,7 @@ export const REGIONAL_EVIDENCE: RegionalEvidence[] = [
     ],
   },
   {
-    variantKey: "BRCA1:c.5309G>T",
+    variantKey: "BRCA1:c.5522G>T",
     assertion: "PATHOGENIC",
     observations: 3,
     cohortSize: 5_400,
@@ -128,7 +128,7 @@ export const REGIONAL_EVIDENCE: RegionalEvidence[] = [
     contributingCentres: ["Regional Hereditary Cancer Network"],
     lastUpdated: "2026-03-04",
     note:
-      "Regional observations are limited but directionally consistent with the global expert-panel classification. No divergence to resolve.",
+      "Regional observations are limited but fall in the same clinical band as the global consensus. No divergence to resolve.",
     citations: [],
   },
   {

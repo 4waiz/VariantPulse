@@ -41,10 +41,12 @@ function submissionPhrase(count: number): string {
   return `${count} submissions`;
 }
 
+/** Full sentence, so subject and verb agree for every count. */
 function recordPhrase(count: number): string {
-  if (count === 0) return "No records on file carry this variant";
-  if (count === 1) return "One record on file carries this variant";
-  return `${count} records on file carry this variant`;
+  if (count === 0) return "No records on file carry this variant.";
+  if (count === 1)
+    return "One record on file carries this variant and has not yet been reassessed.";
+  return `${count} records on file carry this variant and have not yet been reassessed.`;
 }
 
 export function composeEvidenceSummary(input: SummaryInput): string {
@@ -134,7 +136,7 @@ export function composeEvidenceSummary(input: SummaryInput): string {
   }
 
   if (changeType !== "NO_MATERIAL_CHANGE") {
-    sentences.push(`${recordPhrase(impactedRecordCount)} and have not yet been reassessed.`);
+    sentences.push(recordPhrase(impactedRecordCount));
   }
 
   return sentences.join(" ");

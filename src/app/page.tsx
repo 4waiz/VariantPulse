@@ -42,10 +42,10 @@ export default function HomePage() {
   return (
     <div className="px-5 pb-12 sm:px-6 lg:px-8">
       {/* ── Hero ───────────────────────────────────────────────────────── */}
-      <section className="grid gap-6 xl:grid-cols-12 xl:gap-5">
-        <div className="pt-4 xl:col-span-4 xl:pt-10">
+      <section className="grid gap-6 xl:grid-cols-[minmax(0,430px)_minmax(0,1fr)_minmax(0,264px)] xl:gap-5">
+        <div className="pt-4 xl:pt-10">
           <Eyebrow>Monitoring genetic knowledge</Eyebrow>
-          <h1 className="mt-4 text-[38px] font-semibold leading-[1.05] tracking-[-0.032em] text-ink sm:text-[44px]">
+          <h1 className="mt-4 text-[34px] font-semibold leading-[1.06] tracking-[-0.032em] text-ink sm:text-[40px] 2xl:text-[44px]">
             The same DNA.
             <br />A different meaning.
           </h1>
@@ -106,7 +106,7 @@ export default function HomePage() {
         </div>
 
         {/* Centre composition */}
-        <div className="relative min-h-[420px] xl:col-span-5 xl:min-h-[560px]">
+        <div className="relative min-h-[430px] xl:min-h-[620px]">
           {lead ? (
             <div className="vp-float absolute left-1/2 top-2 z-10 flex w-[min(340px,92%)] -translate-x-1/2 items-center gap-3 px-4 py-3">
               <StatusDot tone="neutral" pulse />
@@ -128,7 +128,7 @@ export default function HomePage() {
         </div>
 
         {/* Sources */}
-        <div className="space-y-2.5 xl:col-span-3 xl:pt-10">
+        <div className="space-y-2.5 xl:pt-10">
           <SourceCard
             name="ClinVar"
             description="Global submissions"
@@ -179,7 +179,7 @@ export default function HomePage() {
           />
           {lead ? (
             <>
-              <ThenNow assessment={lead} className="mt-4" />
+              <ThenNow assessment={lead} size="sm" className="mt-4" />
               <p className="mt-3.5 text-[12.5px] leading-relaxed text-muted">
                 {lead.variant.gene} {lead.variant.hgvsCoding} — evidence last evaluated{" "}
                 {formatDate(lead.evidence.lastEvaluated)}.

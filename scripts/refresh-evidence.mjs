@@ -17,7 +17,7 @@ const EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
 
 /** The variant panel this workspace monitors. Every id is a real ClinVar VCV record. */
 const PANEL = [
-  { key: "BRCA1:c.5309G>T", clinvarId: "417832" },
+  { key: "BRCA1:c.5522G>T", clinvarId: "869004" },
   { key: "GLRA1:c.1214G>A", clinvarId: "352307" },
   { key: "LDLR:c.1706-10G>A", clinvarId: "226368" },
   { key: "TP53:c.440T>G", clinvarId: "3602769" },

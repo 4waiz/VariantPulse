@@ -153,7 +153,7 @@ function Panel({
       <p
         className={cn(
           "mt-2 font-semibold leading-tight tracking-tight",
-          size === "lg" ? "text-[20px]" : size === "md" ? "text-[16px]" : "text-[14px]",
+          size === "lg" ? "text-[20px]" : size === "md" ? "text-[16px]" : "text-[15px]",
           info.tone === "critical" && "text-crit",
           info.tone === "warning" && "text-warn",
           info.tone === "positive" && "text-ok",
@@ -161,7 +161,7 @@ function Panel({
           info.tone === "neutral" && "text-info",
         )}
       >
-        {info.label}
+        {size === "sm" ? info.short : info.label}
       </p>
       <p className="mt-1.5 text-[11.5px] leading-snug text-muted">{note}</p>
     </div>

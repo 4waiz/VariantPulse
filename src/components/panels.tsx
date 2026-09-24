@@ -90,7 +90,10 @@ function milestones(assessment: VariantAssessment): Milestone[] {
   events.push({
     year: "Today",
     title: "VariantPulse identified the affected records",
-    detail: `${assessment.impactedRecordCount} historical record${assessment.impactedRecordCount === 1 ? "" : "s"} carry this variant and were flagged for clinical review.`,
+    detail:
+      assessment.impactedRecordCount === 1
+        ? "One historical record carries this variant and was flagged for clinical review."
+        : `${assessment.impactedRecordCount} historical records carry this variant and were flagged for clinical review.`,
     tone: "accent",
   });
 
