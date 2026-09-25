@@ -110,7 +110,7 @@ export default function HomePage() {
         <div className="relative min-h-[420px] xl:h-[clamp(430px,53vh,580px)] xl:min-h-0">
           {lead ? (
             <div className="vp-float absolute left-1/2 top-2 z-10 flex w-[min(340px,92%)] -translate-x-1/2 items-center gap-3 px-4 py-3">
-              <StatusDot tone="neutral" pulse />
+              <StatusDot tone="accent" pulse />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[13px] font-semibold text-ink">
                   New evidence detected

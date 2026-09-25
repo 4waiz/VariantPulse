@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
 // The viewBox aspect is tuned to the column the composition sits in, so the
 // artwork fills its space rather than letterboxing inside it.
 const WIDTH = 500;
-const HEIGHT = 726;
+const HEIGHT = 696;
 const CENTRE = 250;
 
 const HELIX_TOP = 8;
@@ -164,8 +164,8 @@ interface Stage {
 
 const STAGES: Stage[] = [
   { label: "New evidence", y: 424, rx: 152, ry: 38, hue: "#DC2626", shade: "#B91C1C", delay: "0s" },
-  { label: "Analysis", y: 534, rx: 178, ry: 45, hue: "#E11D48", shade: "#BE123C", delay: "0.5s" },
-  { label: "Affected patients", y: 644, rx: 204, ry: 52, hue: "#DB2777", shade: "#9D174D", delay: "1s" },
+  { label: "Analysis", y: 512, rx: 176, ry: 44, hue: "#E11D48", shade: "#BE123C", delay: "0.5s" },
+  { label: "Affected patients", y: 600, rx: 200, ry: 50, hue: "#DB2777", shade: "#9D174D", delay: "1s" },
 ];
 
 /** Where the evidence lines converge: the rim of the first disc. */
@@ -267,10 +267,10 @@ export function EvidencePipeline({ className }: { className?: string }) {
       </defs>
 
       {/* Ambient wash behind the whole composition. */}
-      <ellipse cx={CENTRE} cy={540} rx={238} ry={186} fill="#E11D48" opacity="0.09" filter="url(#vp-soft)" />
+      <ellipse cx={CENTRE} cy={508} rx={232} ry={176} fill="#E11D48" opacity="0.09" filter="url(#vp-soft)" />
 
       {/* The column of light linking the helix to the stack. */}
-      <rect x={CENTRE - 46} y={160} width={92} height={470} fill="url(#vp-column)" />
+      <rect x={CENTRE - 46} y={160} width={92} height={432} fill="url(#vp-column)" />
 
       {/* Stacked stages, back to front. Each disc gets a cast shadow, a side
           wall for thickness, a lit top face and a rim highlight. */}
@@ -433,8 +433,8 @@ export function EvidencePipeline({ className }: { className?: string }) {
 
       {/* Records flowing out to the left, toward the patient panel. */}
       {[
-        { y: 576, curve: -132 },
-        { y: 648, curve: -168 },
+        { y: 548, curve: -128 },
+        { y: 606, curve: -162 },
       ].map((line, index) => (
         <path
           key={line.y}

@@ -208,24 +208,27 @@ export function PriorityBadge({
 
 /* -- Status --------------------------------------------------------------- */
 
+const DOT_COLOUR: Record<Tone | "accent", string> = { ...TONE_DOT, accent: "bg-accent" };
+
 export function StatusDot({
   tone = "positive",
   pulse = false,
   className,
 }: {
-  tone?: Tone;
+  tone?: Tone | "accent";
   pulse?: boolean;
   className?: string;
 }) {
+  const colour = DOT_COLOUR[tone];
   return (
     <span className={cn("relative inline-flex h-2 w-2 shrink-0", className)}>
       {pulse ? (
         <span
-          className={cn("absolute inset-0 rounded-full", TONE_DOT[tone])}
+          className={cn("absolute inset-0 rounded-full", colour)}
           style={{ animation: "vp-pulse-ring 2.4s ease-out infinite" }}
         />
       ) : null}
-      <span className={cn("relative h-2 w-2 rounded-full", TONE_DOT[tone])} />
+      <span className={cn("relative h-2 w-2 rounded-full", colour)} />
     </span>
   );
 }
