@@ -58,7 +58,7 @@ export function PageShell({
   className?: string;
 }) {
   return (
-    <div className={cn("px-5 pb-12 sm:px-6 lg:px-8", className)}>
+    <div className={cn("mx-auto w-full max-w-[1360px] px-5 pb-12 sm:px-6 lg:px-8", className)}>
       {children}
       <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">
         <p className="text-[11.5px] text-faint">VariantPulse · Built by Team Kanban</p>

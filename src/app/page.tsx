@@ -41,10 +41,10 @@ export default function HomePage() {
   const lastChecked = sync.phase === "done" ? sync.at : analysis.checkedAt;
 
   return (
-    <div className="px-5 pb-12 sm:px-6 lg:px-8">
+    <div className="mx-auto w-full max-w-[1360px] px-5 pb-12 sm:px-6 lg:px-8">
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section className="grid gap-6 xl:grid-cols-[minmax(0,430px)_minmax(0,1fr)_minmax(0,232px)] xl:gap-5">
-        <div className="pt-4 xl:pt-10">
+        <div className="pt-4 xl:pt-8">
           <Eyebrow>Monitoring genetic knowledge</Eyebrow>
           <h1 className="mt-4 text-[34px] font-semibold leading-[1.06] tracking-[-0.032em] text-ink sm:text-[40px] 2xl:text-[44px]">
             The same DNA.
@@ -68,7 +68,7 @@ export default function HomePage() {
           </div>
 
           {lead && leadPatients[0] ? (
-            <div className="vp-float vp-drift mt-10 max-w-[23rem] p-4 xl:mt-14">
+            <div className="vp-float vp-drift mt-8 max-w-[23rem] p-4 xl:mt-10">
               <div className="flex items-start gap-3.5">
                 <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#FFECF0] to-[#FDF0F3] text-accent">
                   <Dna className="h-6 w-6" strokeWidth={1.6} />
@@ -107,7 +107,7 @@ export default function HomePage() {
         </div>
 
         {/* Centre composition */}
-        <div className="relative min-h-[460px] xl:min-h-[720px]">
+        <div className="relative min-h-[420px] xl:h-[clamp(430px,53vh,580px)] xl:min-h-0">
           {lead ? (
             <div className="vp-float absolute left-1/2 top-2 z-10 flex w-[min(340px,92%)] -translate-x-1/2 items-center gap-3 px-4 py-3">
               <StatusDot tone="neutral" pulse />
@@ -126,11 +126,11 @@ export default function HomePage() {
           ) : null}
 
           {/* Bleeds into the column gaps so the helix reads at full scale. */}
-          <EvidencePipeline className="absolute inset-0 xl:inset-y-0 xl:-left-10 xl:-right-10 xl:h-auto xl:w-auto" />
+          <EvidencePipeline className="absolute inset-0" />
         </div>
 
         {/* Sources */}
-        <div className="space-y-2.5 xl:pt-10">
+        <div className="space-y-2.5 xl:pt-8">
           <SourceCard
             name="ClinVar"
             description="Global submissions"
