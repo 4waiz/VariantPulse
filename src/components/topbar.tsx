@@ -11,7 +11,8 @@ import { Sidebar } from "@/components/sidebar";
 import { Badge, PriorityBadge, StatusDot } from "@/components/ui";
 import { CURRENT_USER } from "@/data/workspace";
 import { useWorkspace } from "@/state/workspace";
-import { cn, relativeTime } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { RelativeTime } from "@/components/relative-time";
 
 /** Closes a popover on outside click and on Escape. */
 function useDismiss(open: boolean, close: () => void) {
@@ -100,7 +101,7 @@ export function Topbar() {
             <span className="text-[12px] font-medium text-ink-2">
               {live ? "Evidence monitor live" : "Cached evidence"}
             </span>
-            <span className="text-[11.5px] text-faint vp-num">{relativeTime(lastChecked)}</span>
+            <RelativeTime value={lastChecked} className="text-[11.5px] text-faint vp-num" />
           </span>
 
           <button
@@ -180,7 +181,7 @@ export function Topbar() {
           <Link
             href="/settings"
             title={`${CURRENT_USER.name} · ${CURRENT_USER.role}`}
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#8B8BF0] to-[#6366F1] text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#E0475F] to-[#B4123C] text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
           >
             {CURRENT_USER.initials}
             <span className="sr-only">{CURRENT_USER.name}, open settings</span>

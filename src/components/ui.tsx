@@ -105,17 +105,28 @@ const TONE_DOT: Record<Tone, string> = {
   muted: "bg-faint",
 };
 
+const TONE_SOLID: Record<Tone, string> = {
+  critical: "bg-crit text-white border-crit",
+  warning: "bg-warn text-white border-warn",
+  positive: "bg-ok text-white border-ok",
+  neutral: "bg-info text-white border-info",
+  muted: "bg-ink-2 text-white border-ink-2",
+};
+
 export function Badge({
   tone = "muted",
   children,
   className,
   dot = false,
+  solid = false,
   title,
 }: {
   tone?: Tone;
   children: React.ReactNode;
   className?: string;
   dot?: boolean;
+  /** Filled rather than tinted. Reserved for a genuine alarm. */
+  solid?: boolean;
   title?: string;
 }) {
   return (
@@ -123,11 +134,15 @@ export function Badge({
       title={title}
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11.5px] font-medium leading-none whitespace-nowrap",
-        TONE_CLASS[tone],
+        solid ? TONE_SOLID[tone] : TONE_CLASS[tone],
         className,
       )}
     >
-      {dot ? <span className={cn("h-1.5 w-1.5 rounded-full", TONE_DOT[tone])} /> : null}
+      {dot ? (
+        <span
+          className={cn("h-1.5 w-1.5 rounded-full", solid ? "bg-white/80" : TONE_DOT[tone])}
+        />
+      ) : null}
       {children}
     </span>
   );
@@ -179,7 +194,13 @@ export function PriorityBadge({
 }) {
   const info = PRIORITIES[level];
   return (
-    <Badge tone={info.tone} dot className={className} title={info.guidance}>
+    <Badge
+      tone={info.tone}
+      dot
+      solid={level === "CRITICAL"}
+      className={className}
+      title={info.guidance}
+    >
       {info.label}
     </Badge>
   );

@@ -36,8 +36,9 @@ import {
 } from "@/components/ui";
 import { REVIEWERS } from "@/data/workspace";
 import { composeRecommendation } from "@/lib/narrative";
-import { formatDate, relativeTime } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 import { useWorkspace } from "@/state/workspace";
+import { RelativeTime } from "@/components/relative-time";
 
 export default function ReviewCasePage() {
   const params = useParams<{ caseId: string }>();
@@ -91,12 +92,15 @@ export default function ReviewCasePage() {
         }
       />
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,320px)_minmax(0,1fr)_minmax(0,300px)]">
+      {/* Three columns only once there is room for them. At the xl breakpoint
+          the centre column drops to ~300px, which is too narrow for the
+          evidence table and the reasoning trail. */}
+      <div className="grid gap-5 min-[1400px]:grid-cols-[minmax(0,320px)_minmax(0,1fr)_minmax(0,300px)]">
         {/* ── Left: what is affected ──────────────────────────────────── */}
         <div className="space-y-5">
           <Card className="p-5">
             <SectionHeading title="Classification change" />
-            <ThenNow assessment={assessment} className="mt-4" />
+            <ThenNow assessment={assessment} stacked className="mt-4" />
             <div className="mt-4 border-t border-line pt-3.5">
               <ChangeTypeBadge type={assessment.changeType} />
             </div>
@@ -178,9 +182,7 @@ export default function ReviewCasePage() {
                   <li key={entry.id} className="px-5 py-3.5">
                     <div className="flex items-baseline justify-between gap-3">
                       <p className="text-[12.5px] font-medium text-ink">{entry.author}</p>
-                      <time dateTime={entry.at} className="text-[11px] text-faint">
-                        {relativeTime(entry.at)}
-                      </time>
+<RelativeTime value={entry.at} className="text-[11px] text-faint" />
                     </div>
                     <p className="mt-1 text-[13px] leading-relaxed text-ink-2">{entry.body}</p>
                   </li>
@@ -329,7 +331,7 @@ export default function ReviewCasePage() {
             <SectionHeading title="Case detail" />
             <dl className="mt-3.5 space-y-3">
               <Field label="Case" value={caseId} mono />
-              <Field label="Raised" value={relativeTime(analysis.checkedAt)} />
+              <Field label="Raised" value={<RelativeTime value={analysis.checkedAt} />} />
               <Field label="Assigned" value={state.assignee ?? "Unassigned"} />
               <Field
                 label="Evidence source"

@@ -406,7 +406,7 @@ export function EvidenceComparison({
                   rel="noopener noreferrer"
                   className="text-ink-2 transition-colors hover:text-accent"
                 >
-                  {citation.title}
+                  {citation.title || `PubMed ${citation.pmid}`}
                 </a>
                 <span className="text-faint">
                   {" "}

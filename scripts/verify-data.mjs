@@ -105,6 +105,12 @@ for (const key of Object.keys(snapshot.records)) {
   if (!panelKeys.has(key)) {
     fail(`Snapshot holds ${key}, which is no longer on the monitored panel.`);
   }
+  for (const citation of snapshot.records[key].citations ?? []) {
+    // A citation with no title renders as a link with no accessible name.
+    if (!citation.title?.trim()) {
+      fail(`${key} cites PMID ${citation.pmid} with no title.`);
+    }
+  }
 }
 
 for (const patient of patients) {

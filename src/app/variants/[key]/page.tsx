@@ -102,7 +102,7 @@ export default function VariantPage() {
         <ThenNow assessment={assessment} size="lg" className="mt-5" />
       </Card>
 
-      <div className="grid gap-5 xl:grid-cols-[1.25fr_1fr]">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
         <div className="space-y-5">
           <EvidenceSummaryPanel assessment={assessment} />
           <EvidenceComparison assessment={assessment} />

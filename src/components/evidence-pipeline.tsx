@@ -25,14 +25,14 @@ import { cn } from "@/lib/utils";
 
 // The viewBox aspect is tuned to the column the composition sits in, so the
 // artwork fills its space rather than letterboxing inside it.
-const WIDTH = 460;
-const HEIGHT = 673;
-const CENTRE = 230;
+const WIDTH = 500;
+const HEIGHT = 726;
+const CENTRE = 250;
 
-const HELIX_TOP = 10;
-const HELIX_BOTTOM = 412;
-const AMPLITUDE = 118;
-const TURNS = 2.5;
+const HELIX_TOP = 8;
+const HELIX_BOTTOM = 382;
+const AMPLITUDE = 120;
+const TURNS = 2.3;
 
 /** Vertical distance covered by one full turn. The animation slides by this. */
 const PITCH = (HELIX_BOTTOM - HELIX_TOP) / TURNS;
@@ -49,6 +49,21 @@ interface Node {
 }
 
 /**
+ * Quantises a value before it reaches the DOM.
+ *
+ * ECMAScript does not require Math.sin and Math.cos to be correctly rounded,
+ * so Node and the browser can disagree in the last bit or two. Those raw floats
+ * become SVG attributes, and React then reports a hydration mismatch and throws
+ * away the server-rendered subtree. Rounding first makes the two agree, and it
+ * trims a good deal of markup at the same time. IEEE +, -, * and / are exact,
+ * so everything derived from a rounded value stays in step.
+ */
+const q = (value: number, places = 3): number => {
+  const factor = 10 ** places;
+  return Math.round(value * factor) / factor;
+};
+
+/**
  * Samples one strand from a full turn above the visible top, so the group has
  * somewhere to slide in from.
  */
@@ -62,7 +77,11 @@ function strandNodes(strand: 0 | 1): Node[] {
     // The angle advances with absolute y, which is what makes the pattern
     // periodic and the slide seamless.
     const angle = ((y - HELIX_TOP) / PITCH) * Math.PI * 2 + phase;
-    return { x: CENTRE + AMPLITUDE * Math.sin(angle), y, z: Math.cos(angle) };
+    return {
+      x: q(CENTRE + AMPLITUDE * Math.sin(angle), 4),
+      y: q(y, 4),
+      z: q(Math.cos(angle), 6),
+    };
   });
 }
 
@@ -144,10 +163,13 @@ interface Stage {
 }
 
 const STAGES: Stage[] = [
-  { label: "New evidence", y: 445, rx: 140, ry: 34, hue: "#6366F1", shade: "#4F46E5", delay: "0s" },
-  { label: "Analysis", y: 530, rx: 162, ry: 40, hue: "#7C6BEA", shade: "#6D28D9", delay: "0.5s" },
-  { label: "Affected patients", y: 614, rx: 184, ry: 46, hue: "#A855F7", shade: "#8B2FD6", delay: "1s" },
+  { label: "New evidence", y: 424, rx: 152, ry: 38, hue: "#DC2626", shade: "#B91C1C", delay: "0s" },
+  { label: "Analysis", y: 534, rx: 178, ry: 45, hue: "#E11D48", shade: "#BE123C", delay: "0.5s" },
+  { label: "Affected patients", y: 644, rx: 204, ry: 52, hue: "#DB2777", shade: "#9D174D", delay: "1s" },
 ];
+
+/** Where the evidence lines converge: the rim of the first disc. */
+const INTAKE_Y = STAGES[0].y;
 
 export function EvidencePipeline({ className }: { className?: string }) {
   return (
@@ -158,42 +180,63 @@ export function EvidencePipeline({ className }: { className?: string }) {
       focusable="false"
     >
       <defs>
-        {/* Each strand keeps to its own hue family so the two stay legible
-            wherever they cross. */}
-        <linearGradient id="vp-strand-a" x1="0.1" y1="0" x2="0.9" y2="1">
-          <stop offset="0%" stopColor="#22D3EE" />
-          <stop offset="55%" stopColor="#3B82F6" />
-          <stop offset="100%" stopColor="#4338CA" />
+        {/* The mark pairs a crimson ribbon with a pale one. The two strands
+            keep to separate hue families so they stay legible where they
+            cross: one warm red, one cooler rose.
+
+            These are in user space and run horizontally, for two reasons. A
+            bounding-box gradient would restart inside every one of the ~130
+            segments, averaging each to a muddy mid-tone; and a horizontal axis
+            is unaffected by the vertical slide, so the lighting stays put while
+            the helix turns. The result reads as a light source to the left. */}
+        <linearGradient
+          id="vp-strand-a"
+          gradientUnits="userSpaceOnUse"
+          x1={CENTRE - AMPLITUDE}
+          y1="0"
+          x2={CENTRE + AMPLITUDE}
+          y2="0"
+        >
+          <stop offset="0%" stopColor="#FF8A75" />
+          <stop offset="50%" stopColor="#E02424" />
+          <stop offset="100%" stopColor="#8B1616" />
         </linearGradient>
-        <linearGradient id="vp-strand-b" x1="0.9" y1="0" x2="0.1" y2="1">
-          <stop offset="0%" stopColor="#C084FC" />
-          <stop offset="55%" stopColor="#8B5CF6" />
-          <stop offset="100%" stopColor="#6D28D9" />
+        <linearGradient
+          id="vp-strand-b"
+          gradientUnits="userSpaceOnUse"
+          x1={CENTRE - AMPLITUDE}
+          y1="0"
+          x2={CENTRE + AMPLITUDE}
+          y2="0"
+        >
+          <stop offset="0%" stopColor="#FF9CB8" />
+          <stop offset="50%" stopColor="#D81B48" />
+          <stop offset="100%" stopColor="#7A0F30" />
         </linearGradient>
 
         {/* Beads are lit from the upper left, which is what reads as spherical. */}
         <radialGradient id="vp-bead-a" cx="33%" cy="27%" r="80%">
           <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="26%" stopColor="#7DD3FC" />
-          <stop offset="100%" stopColor="#1E3A8A" />
+          <stop offset="26%" stopColor="#FCA5A5" />
+          <stop offset="100%" stopColor="#7F1D1D" />
         </radialGradient>
         <radialGradient id="vp-bead-b" cx="33%" cy="27%" r="80%">
           <stop offset="0%" stopColor="#FFFFFF" />
-          <stop offset="26%" stopColor="#D8B4FE" />
-          <stop offset="100%" stopColor="#4C1D95" />
+          <stop offset="26%" stopColor="#FDA4AF" />
+          <stop offset="100%" stopColor="#881337" />
         </radialGradient>
 
         <linearGradient id="vp-column" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#6366F1" stopOpacity="0" />
-          <stop offset="50%" stopColor="#6366F1" stopOpacity="0.16" />
-          <stop offset="100%" stopColor="#A855F7" stopOpacity="0" />
+          <stop offset="0%" stopColor="#DC2626" stopOpacity="0" />
+          <stop offset="50%" stopColor="#DC2626" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="#DB2777" stopOpacity="0" />
         </linearGradient>
 
         {STAGES.map((stage, index) => (
           <radialGradient key={stage.label} id={`vp-disc-${index}`} cx="50%" cy="36%" r="64%">
-            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.6" />
-            <stop offset="42%" stopColor={stage.hue} stopOpacity="0.24" />
-            <stop offset="100%" stopColor={stage.shade} stopOpacity="0.12" />
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.45" />
+            <stop offset="42%" stopColor={stage.hue} stopOpacity="0.32" />
+            <stop offset="100%" stopColor={stage.shade} stopOpacity="0.17" />
           </radialGradient>
         ))}
 
@@ -216,7 +259,7 @@ export function EvidencePipeline({ className }: { className?: string }) {
         </mask>
 
         <filter id="vp-soft" x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="10" />
+          <feGaussianBlur stdDeviation="11" />
         </filter>
         <filter id="vp-contact" x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="7" />
@@ -224,10 +267,10 @@ export function EvidencePipeline({ className }: { className?: string }) {
       </defs>
 
       {/* Ambient wash behind the whole composition. */}
-      <ellipse cx={CENTRE} cy={514} rx={216} ry={172} fill="#6366F1" opacity="0.07" filter="url(#vp-soft)" />
+      <ellipse cx={CENTRE} cy={540} rx={238} ry={186} fill="#E11D48" opacity="0.09" filter="url(#vp-soft)" />
 
       {/* The column of light linking the helix to the stack. */}
-      <rect x={CENTRE - 44} y={175} width={88} height={430} fill="url(#vp-column)" />
+      <rect x={CENTRE - 46} y={160} width={92} height={470} fill="url(#vp-column)" />
 
       {/* Stacked stages, back to front. Each disc gets a cast shadow, a side
           wall for thickness, a lit top face and a rim highlight. */}
@@ -235,14 +278,14 @@ export function EvidencePipeline({ className }: { className?: string }) {
         <g key={stage.label}>
           <ellipse
             cx={CENTRE}
-            cy={stage.y + 17}
+            cy={stage.y + 18}
             rx={stage.rx * 0.92}
             ry={stage.ry * 0.7}
             fill={stage.shade}
-            opacity="0.17"
+            opacity="0.16"
             filter="url(#vp-soft)"
           />
-          <ellipse cx={CENTRE} cy={stage.y + 8} rx={stage.rx} ry={stage.ry} fill={stage.shade} opacity="0.15" />
+          <ellipse cx={CENTRE} cy={stage.y + 9} rx={stage.rx} ry={stage.ry} fill={stage.shade} opacity="0.14" />
           <ellipse cx={CENTRE} cy={stage.y} rx={stage.rx} ry={stage.ry} fill={`url(#vp-disc-${index})`} />
           <ellipse
             cx={CENTRE}
@@ -251,8 +294,8 @@ export function EvidencePipeline({ className }: { className?: string }) {
             ry={stage.ry}
             fill="none"
             stroke={stage.hue}
-            strokeOpacity="0.46"
-            strokeWidth="1.3"
+            strokeOpacity="0.56"
+            strokeWidth="1.4"
           />
           {/* Rim highlight along the upper edge only. */}
           <path
@@ -269,7 +312,7 @@ export function EvidencePipeline({ className }: { className?: string }) {
             ry={stage.ry * 0.6}
             fill="none"
             stroke={stage.hue}
-            strokeOpacity="0.15"
+            strokeOpacity="0.2"
             strokeWidth="1"
           />
           <text
@@ -277,11 +320,11 @@ export function EvidencePipeline({ className }: { className?: string }) {
             y={stage.y + 4}
             textAnchor="middle"
             className="fill-ink-2"
-            style={{ font: "500 12.5px var(--font-inter), sans-serif", letterSpacing: "0.01em" }}
+            style={{ font: "500 13px var(--font-inter), sans-serif", letterSpacing: "0.01em" }}
           >
             {stage.label}
           </text>
-          <circle r="3.2" fill={stage.hue} opacity="0.9">
+          <circle r="3.4" fill={stage.hue} opacity="0.9">
             <animateMotion
               dur="9s"
               begin={stage.delay}
@@ -293,16 +336,16 @@ export function EvidencePipeline({ className }: { className?: string }) {
       ))}
 
       {/* Where the helix meets the top disc. */}
-      <ellipse cx={CENTRE} cy={HELIX_BOTTOM + 10} rx={86} ry={15} fill="#4F46E5" opacity="0.22" filter="url(#vp-contact)" />
+      <ellipse cx={CENTRE} cy={HELIX_BOTTOM + 12} rx={90} ry={16} fill="#9F1239" opacity="0.26" filter="url(#vp-contact)" />
 
       {/* The helix. Depth-sorted, and sliding by exactly one turn. */}
       <g mask="url(#vp-helix-mask)">
-        <g className="vp-helix" style={{ ["--vp-pitch" as string]: `${PITCH}px` }}>
+        <g className="vp-helix" style={{ ["--vp-pitch" as string]: `${q(PITCH)}px` }}>
           {HELIX.map((item, index) => {
             const n = near(item.z);
 
             if (item.kind === "seg") {
-              const width = 4.4 + 8 * n;
+              const width = q(4.4 + 8 * n);
               return (
                 <g key={index}>
                   {/* A halo on near segments separates them from whatever they
@@ -314,9 +357,9 @@ export function EvidencePipeline({ className }: { className?: string }) {
                       x2={item.x2}
                       y2={item.y2}
                       stroke="#FFFFFF"
-                      strokeWidth={width + 6}
+                      strokeWidth={q(width + 6)}
                       strokeLinecap="round"
-                      opacity={(n - 0.55) * 2.1}
+                      opacity={q((n - 0.55) * 2.1)}
                     />
                   ) : null}
                   <line
@@ -327,7 +370,7 @@ export function EvidencePipeline({ className }: { className?: string }) {
                     stroke={item.strand === 0 ? "url(#vp-strand-a)" : "url(#vp-strand-b)"}
                     strokeWidth={width}
                     strokeLinecap="round"
-                    opacity={0.14 + 0.86 * n}
+                    opacity={q(0.2 + 0.8 * n)}
                   />
                 </g>
               );
@@ -341,10 +384,10 @@ export function EvidencePipeline({ className }: { className?: string }) {
                   y1={item.y1}
                   x2={item.x2}
                   y2={item.y2}
-                  stroke={item.pair === 0 ? "#818CF8" : "#C4B5FD"}
-                  strokeWidth={1.5 + 1.6 * n}
+                  stroke={item.pair === 0 ? "#E04A4A" : "#E8738F"}
+                  strokeWidth={q(1.5 + 1.6 * n)}
                   strokeLinecap="round"
-                  opacity={0.1 + 0.44 * n}
+                  opacity={q(0.14 + 0.5 * n)}
                 />
               );
             }
@@ -354,9 +397,9 @@ export function EvidencePipeline({ className }: { className?: string }) {
                 key={index}
                 cx={item.x}
                 cy={item.y}
-                r={2.2 + 4.8 * n}
+                r={q(2.2 + 4.8 * n)}
                 fill={item.strand === 0 ? "url(#vp-bead-a)" : "url(#vp-bead-b)"}
-                opacity={0.16 + 0.84 * n}
+                opacity={q(0.16 + 0.84 * n)}
               />
             );
           })}
@@ -365,47 +408,39 @@ export function EvidencePipeline({ className }: { className?: string }) {
 
       {/* Evidence arriving from the sources on the right. */}
       {[
-        { y: 172, curve: 96 },
-        { y: 252, curve: 68 },
-        { y: 330, curve: 44 },
-        { y: 400, curve: 20 },
-      ].map((line, index) => (
-        <g key={line.y}>
-          <path
-            d={`M ${WIDTH - 4} ${line.y} C ${WIDTH - 112} ${line.y}, ${CENTRE + line.curve + 70} ${445}, ${CENTRE + line.curve} ${445}`}
-            fill="none"
-            stroke="#94A3F5"
-            strokeOpacity="0.38"
-            strokeWidth="1.1"
-          />
-          <circle r="2.8" fill="#6366F1">
-            <animateMotion
-              dur="4.5s"
-              begin={`${index * 0.9}s`}
-              repeatCount="indefinite"
-              path={`M ${WIDTH - 4} ${line.y} C ${WIDTH - 112} ${line.y}, ${CENTRE + line.curve + 70} ${445}, ${CENTRE + line.curve} ${445}`}
-            />
-            <animate
-              attributeName="opacity"
-              values="0;1;1;0"
-              dur="4.5s"
-              begin={`${index * 0.9}s`}
-              repeatCount="indefinite"
-            />
-          </circle>
-        </g>
-      ))}
+        { y: 166, curve: 104 },
+        { y: 248, curve: 74 },
+        { y: 328, curve: 48 },
+        { y: 400, curve: 22 },
+      ].map((line, index) => {
+        const path = `M ${WIDTH - 4} ${line.y} C ${WIDTH - 118} ${line.y}, ${CENTRE + line.curve + 74} ${INTAKE_Y}, ${CENTRE + line.curve} ${INTAKE_Y}`;
+        return (
+          <g key={line.y}>
+            <path d={path} fill="none" stroke="#EDA3B4" strokeOpacity="0.5" strokeWidth="1.1" />
+            <circle r="2.9" fill="#E11D48">
+              <animateMotion dur="4.5s" begin={`${index * 0.9}s`} repeatCount="indefinite" path={path} />
+              <animate
+                attributeName="opacity"
+                values="0;1;1;0"
+                dur="4.5s"
+                begin={`${index * 0.9}s`}
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+        );
+      })}
 
       {/* Records flowing out to the left, toward the patient panel. */}
       {[
-        { y: 556, curve: -120 },
-        { y: 618, curve: -152 },
+        { y: 576, curve: -132 },
+        { y: 648, curve: -168 },
       ].map((line, index) => (
         <path
           key={line.y}
-          d={`M ${CENTRE + line.curve} ${line.y} C ${CENTRE + line.curve - 70} ${line.y}, 66 ${line.y + 14}, 6 ${line.y + 18}`}
+          d={`M ${CENTRE + line.curve} ${line.y} C ${CENTRE + line.curve - 74} ${line.y}, 70 ${line.y + 14}, 6 ${line.y + 18}`}
           fill="none"
-          stroke="#A855F7"
+          stroke="#DB2777"
           strokeOpacity={0.24 - index * 0.06}
           strokeWidth="1.1"
         />

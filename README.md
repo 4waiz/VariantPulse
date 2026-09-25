@@ -103,18 +103,32 @@ Open <http://localhost:3000>.
 
 ```bash
 npm run build             # production build
-npm run type-check        # tsc --noEmit
-npm run lint              # eslint
-npm run verify:data       # data coherence checks (see below)
+npm run verify            # type-check, lint, data and contrast checks
 npm run evidence:refresh  # re-pull the ClinVar snapshot
 ```
 
-`verify:data` checks what the type system cannot: that every monitored variant is
-backed by a real evidence record, that no patient points at a variant outside the
-panel, and — most importantly — that no variant is presented as reclassified when
-the source last evaluated it *before* the report it is supposed to have superseded.
-A case built on that premise would be false, and it is the kind of error that reads
-as plausible right up until a clinician checks it.
+`npm run verify` runs four gates:
+
+| Gate | What it catches |
+|---|---|
+| `type-check` | `tsc --noEmit` |
+| `lint` | `eslint` |
+| `verify:data` | incoherent clinical data |
+| `verify:contrast` | inaccessible colour |
+
+**`verify:data`** checks what the type system cannot: that every monitored variant
+is backed by a real evidence record, that no patient points at a variant outside
+the panel, that no citation renders as a link with no text, and — most importantly
+— that no variant is presented as reclassified when the source last evaluated it
+*before* the report it is supposed to have superseded. A case built on that premise
+would be false, and it is the kind of error that reads as plausible right up until a
+clinician checks it.
+
+**`verify:contrast`** parses the design tokens out of `globals.css` and asserts
+every foreground clears WCAG 2.1 AA against each surface it is actually painted on.
+Small uppercase labels are still "normal text" under 1.4.3, so the faintest tone is
+held to 4.5:1 rather than the 3:1 allowed for large text; the lightness hierarchy is
+therefore shallow by design and size, case and tracking carry it instead.
 
 No environment variables are required. VariantPulse reads public endpoints that need no key, and
 works fully offline against its bundled evidence snapshot.
@@ -165,6 +179,16 @@ This distinction is maintained deliberately and is stated throughout the interfa
 
 The finding corpus is generated from a fixed seed, so a sync genuinely walks all 12,482 records
 on every run rather than reporting a number it did not compute.
+
+## The accent and the alarm
+
+The brand accent is the crimson of the mark. Critical status is also red, which is
+a hazard: in a triage tool the alarm colour must never read as decoration. Two
+things keep them apart. The accent is rose-leaning and held at a different hue from
+the vermillion used for critical, and — more reliably, since hue alone is weak here
+— only a `CRITICAL` priority is rendered as a **filled** badge. Everything else is
+tinted. The distinction is carried by weight, which survives both a projector and a
+colour-vision deficiency.
 
 ## Clinician in the loop
 

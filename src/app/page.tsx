@@ -26,8 +26,9 @@ import {
   StatusDot,
 } from "@/components/ui";
 import { pick } from "@/lib/dto";
-import { formatDate, formatYear, relativeTime } from "@/lib/utils";
+import { formatDate, formatYear } from "@/lib/utils";
 import { useWorkspace } from "@/state/workspace";
+import { RelativeTime } from "@/components/relative-time";
 
 export default function HomePage() {
   const { analysis, activity, sync } = useWorkspace();
@@ -69,7 +70,7 @@ export default function HomePage() {
           {lead && leadPatients[0] ? (
             <div className="vp-float vp-drift mt-10 max-w-[23rem] p-4 xl:mt-14">
               <div className="flex items-start gap-3.5">
-                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#E8EAFF] to-[#F3EEFF] text-accent">
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-[#FFECF0] to-[#FDF0F3] text-accent">
                   <Dna className="h-6 w-6" strokeWidth={1.6} />
                 </span>
                 <div className="min-w-0 flex-1">
@@ -106,7 +107,7 @@ export default function HomePage() {
         </div>
 
         {/* Centre composition */}
-        <div className="relative min-h-[460px] xl:min-h-[700px]">
+        <div className="relative min-h-[460px] xl:min-h-[720px]">
           {lead ? (
             <div className="vp-float absolute left-1/2 top-2 z-10 flex w-[min(340px,92%)] -translate-x-1/2 items-center gap-3 px-4 py-3">
               <StatusDot tone="neutral" pulse />
@@ -134,7 +135,7 @@ export default function HomePage() {
             name="ClinVar"
             description="Global submissions"
             status={live ? "live" : "cached"}
-            detail={relativeTime(lastChecked)}
+            detail={<RelativeTime value={lastChecked} />}
             glyph={<Database className="h-4 w-4" />}
           />
           <SourceCard
@@ -215,7 +216,7 @@ export default function HomePage() {
                   key={patient.id}
                   href={`/patients/${patient.id}`}
                   title={`${patient.id} · ${patient.orderingDepartment}`}
-                  className="grid h-11 w-11 place-items-center rounded-full border-2 border-white bg-gradient-to-br from-[#EEF0FF] to-[#F5F0FF] text-[11px] font-semibold text-accent transition-transform hover:-translate-y-0.5"
+                  className="grid h-11 w-11 place-items-center rounded-full border-2 border-white bg-gradient-to-br from-[#FFEEF2] to-[#FDF1F4] text-[11px] font-semibold text-accent transition-transform hover:-translate-y-0.5"
                   style={{ zIndex: 10 - index }}
                 >
                   {patient.id.slice(-3)}
@@ -263,7 +264,7 @@ export default function HomePage() {
           <MetricCard
             label="Historical findings monitored"
             value={analysis.metrics.findingsMonitored}
-            hint={`Checked ${relativeTime(lastChecked)}`}
+            hint={<>Checked <RelativeTime value={lastChecked} /></>}
           />
           <MetricCard
             label="Evidence changes detected"
@@ -322,7 +323,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Timeline and activity ──────────────────────────────────────── */}
-      <section className="mt-8 grid gap-4 xl:grid-cols-[1.35fr_1fr]">
+      <section className="mt-8 grid gap-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
         {lead ? <ScienceTimeline assessment={lead} /> : <div />}
 
         <Card className="flex flex-col p-5">

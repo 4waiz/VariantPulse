@@ -5,8 +5,9 @@ import { ArrowRight } from "lucide-react";
 
 import type { PatientRecord } from "@/data/workspace";
 import type { VariantAssessment } from "@/lib/analysis";
-import { cn, formatDate, relativeTime } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { Badge, ClassificationBadge, EmptyState } from "@/components/ui";
+import { RelativeTime } from "@/components/relative-time";
 
 const STATE_TONE = {
   "Not reviewed": "warning",
@@ -113,7 +114,7 @@ export function PatientImpactTable({
                   {patient.clinicalOwner}
                 </td>
                 <td className="whitespace-nowrap px-4 py-3 text-[12.5px] text-muted vp-num">
-                  {relativeTime(patient.lastContact)}
+                  <RelativeTime value={patient.lastContact} />
                 </td>
                 <td className="px-4 py-3">
                   <Badge tone={STATE_TONE[patient.reviewState]}>{patient.reviewState}</Badge>

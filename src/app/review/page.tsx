@@ -16,9 +16,10 @@ import {
   VariantLabel,
 } from "@/components/ui";
 import { composeReviewReason } from "@/lib/narrative";
-import { cn, relativeTime } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { pick } from "@/lib/dto";
 import { useWorkspace, type CaseStatus } from "@/state/workspace";
+import { RelativeTime } from "@/components/relative-time";
 
 const TABS: CaseStatus[] = ["Needs review", "Assigned", "In progress", "Resolved"];
 
@@ -100,7 +101,7 @@ export default function ReviewPage() {
                   <ChangeTypeBadge type={assessment.changeType} />
                   <Badge tone="muted">{assessment.caseId}</Badge>
                   <span className="ml-auto text-[11.5px] text-faint">
-                    Raised {relativeTime(analysis.checkedAt)}
+                    Raised <RelativeTime value={analysis.checkedAt} />
                   </span>
                 </div>
 

@@ -17,8 +17,9 @@ import {
 import { PageHeader, PageShell } from "@/components/page-header";
 import { Badge, Card, Field, SectionHeading } from "@/components/ui";
 import { CURRENT_USER, MONITORED_FINDING_COUNT } from "@/data/workspace";
-import { cn, formatNumber, relativeTime } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import { useWorkspace } from "@/state/workspace";
+import { RelativeTime } from "@/components/relative-time";
 
 const STAGES = [
   {
@@ -238,7 +239,7 @@ export default function SettingsPage() {
                 </span>
               }
             />
-            <Field label="Last checked" value={relativeTime(lastChecked)} />
+            <Field label="Last checked" value={<RelativeTime value={lastChecked} />} />
             <Field
               label="Findings monitored"
               value={formatNumber(MONITORED_FINDING_COUNT)}

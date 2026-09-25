@@ -38,7 +38,7 @@ export default function RegionalPage() {
       />
 
       <Card className="mb-5 p-5">
-        <div className="grid gap-5 lg:grid-cols-[1fr_auto_1fr]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
           <div>
             <div className="flex items-center gap-2">
               <Globe2 className="h-4 w-4 text-muted" />

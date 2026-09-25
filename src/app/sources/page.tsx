@@ -6,8 +6,9 @@ import { PageHeader, PageShell } from "@/components/page-header";
 import { SyncButton } from "@/components/sync";
 import { Badge, Card, SectionHeading, StatusDot } from "@/components/ui";
 import { REGIONAL_EVIDENCE, REGIONAL_SOURCE } from "@/data/regional";
-import { formatDate, formatNumber, relativeTime } from "@/lib/utils";
+import { formatDate, formatNumber } from "@/lib/utils";
 import { useWorkspace } from "@/state/workspace";
+import { RelativeTime } from "@/components/relative-time";
 
 export default function SourcesPage() {
   const { analysis, sync } = useWorkspace();
@@ -36,7 +37,7 @@ export default function SourcesPage() {
       stats: [
         { label: "Variants monitored", value: formatNumber(analysis.assessments.length) },
         { label: "Submissions aggregated", value: formatNumber(submissions) },
-        { label: "Last checked", value: relativeTime(lastChecked) },
+        { label: "Last checked", value: <RelativeTime value={lastChecked} /> },
       ],
       href: "https://www.ncbi.nlm.nih.gov/clinvar/",
     },
@@ -109,7 +110,7 @@ export default function SourcesPage() {
           </span>
         </span>
         <span className="text-[12.5px] text-muted">
-          Last sync {relativeTime(lastChecked)} ·{" "}
+          Last sync <RelativeTime value={lastChecked} /> ·{" "}
           {formatNumber(analysis.scan.findingsChecked)} findings checked ·{" "}
           {analysis.metrics.evidenceChanges} change
           {analysis.metrics.evidenceChanges === 1 ? "" : "s"} found

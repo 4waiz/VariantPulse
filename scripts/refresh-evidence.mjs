@@ -66,12 +66,17 @@ async function fetchArticles(pmids) {
       `${EUTILS}/esummary.fcgi?db=pubmed&retmode=json&id=${pmids.join(",")}`,
     );
     const r = data.result ?? {};
-    return (r.uids ?? []).map((u) => ({
-      pmid: u,
-      title: r[u]?.title ?? "",
-      journal: r[u]?.source ?? "",
-      year: (r[u]?.pubdate ?? "").slice(0, 4),
-    }));
+    return (r.uids ?? [])
+      .map((u) => {
+        const record = r[u] ?? {};
+        // Books and monographs carry their title in `booktitle` and leave
+        // `title` empty, which would otherwise produce a citation with no
+        // visible text and a link with no accessible name.
+        const title = (record.title || record.booktitle || "").trim();
+        const journal = (record.source || record.publishername || "").trim();
+        return { pmid: u, title, journal, year: (record.pubdate ?? "").slice(0, 4) };
+      })
+      .filter((c) => c.title.length > 0);
   } catch {
     return [];
   }

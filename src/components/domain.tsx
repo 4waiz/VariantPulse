@@ -11,7 +11,8 @@ import { ArrowRight, ArrowUpRight, Clock, FileText, Users } from "lucide-react";
 
 import type { VariantAssessment } from "@/lib/analysis";
 import { CHANGE_TYPES, meta } from "@/lib/classification";
-import { cn, formatDate, formatNumber, formatYear, relativeTime } from "@/lib/utils";
+import { cn, formatDate, formatNumber, formatYear } from "@/lib/utils";
+import { RelativeTime } from "@/components/relative-time";
 import {
   Badge,
   Card,
@@ -33,7 +34,7 @@ export function MetricCard({
 }: {
   label: string;
   value: number | string;
-  hint?: string;
+  hint?: React.ReactNode;
   tone?: "neutral" | "critical" | "warning" | "positive";
   href?: string;
 }) {
@@ -79,26 +80,69 @@ export function MetricCard({
 export function ThenNow({
   assessment,
   size = "md",
+  stacked = false,
   className,
 }: {
   assessment: VariantAssessment;
   size?: "sm" | "md" | "lg";
+  /**
+   * Stacks the two states vertically. Side by side, each panel gets under half
+   * the container, which is not enough for a label like "Likely pathogenic" in
+   * a narrow column — it would hyphenate mid-word.
+   */
+  stacked?: boolean;
   className?: string;
 }) {
   const { variant, recordedCode, currentCode, evidence } = assessment;
   const thenYear = formatYear(variant.recordedOn);
   const nowYear = formatYear(evidence.lastEvaluated) || String(new Date().getUTCFullYear());
 
+  const then = (
+    <Panel
+      year={thenYear}
+      label="Then"
+      code={recordedCode}
+      note="As reported"
+      tone="muted"
+      size={size}
+    />
+  );
+  const now = (
+    <Panel
+      year={nowYear}
+      label="Now"
+      code={currentCode}
+      note={assessment.confidence.label}
+      tone="accent"
+      size={size}
+    />
+  );
+
+  if (stacked) {
+    return (
+      <div className={cn("grid gap-2.5", className)}>
+        {then}
+        <div className="flex items-center justify-center gap-2">
+          <span className="grid h-7 w-7 place-items-center rounded-full border border-line-2 bg-surface text-muted">
+            <ArrowRight className="h-3.5 w-3.5 rotate-90" />
+          </span>
+          <span className="text-[9.5px] font-semibold uppercase tracking-[0.11em] text-faint">
+            Science changed
+          </span>
+        </div>
+        {now}
+      </div>
+    );
+  }
+
   return (
-    <div className={cn("grid grid-cols-[1fr_auto_1fr] items-stretch gap-3", className)}>
-      <Panel
-        year={thenYear}
-        label="Then"
-        code={recordedCode}
-        note="As reported"
-        tone="muted"
-        size={size}
-      />
+    <div
+      className={cn(
+        "grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-stretch gap-3",
+        className,
+      )}
+    >
+      {then}
       <div className="flex flex-col items-center justify-center gap-2 px-1">
         <span className="grid h-8 w-8 place-items-center rounded-full border border-line-2 bg-surface text-muted">
           <ArrowRight className="h-4 w-4" />
@@ -109,14 +153,7 @@ export function ThenNow({
           changed
         </span>
       </div>
-      <Panel
-        year={nowYear}
-        label="Now"
-        code={currentCode}
-        note={assessment.confidence.label}
-        tone="accent"
-        size={size}
-      />
+      {now}
     </div>
   );
 }
@@ -152,7 +189,7 @@ function Panel({
       </div>
       <p
         className={cn(
-          "mt-2 font-semibold leading-tight tracking-tight",
+          "mt-2 font-semibold leading-tight tracking-tight [overflow-wrap:break-word]",
           size === "lg" ? "text-[20px]" : size === "md" ? "text-[16px]" : "text-[15px]",
           info.tone === "critical" && "text-crit",
           info.tone === "warning" && "text-warn",
@@ -300,7 +337,7 @@ export function SourceCard({
   name: string;
   description: string;
   status: "live" | "connected" | "cached" | "degraded";
-  detail?: string;
+  detail?: React.ReactNode;
   glyph: React.ReactNode;
 }) {
   const tone =
@@ -383,9 +420,7 @@ export function ActivityItem({
         {detail ? (
           <span className="mt-0.5 block text-[12px] leading-snug text-muted">{detail}</span>
         ) : null}
-        <time dateTime={at} className="mt-1 block text-[11px] text-faint vp-num">
-          {relativeTime(at)}
-        </time>
+<RelativeTime value={at} className="mt-1 block text-[11px] text-faint vp-num" />
       </span>
     </li>
   );

@@ -122,7 +122,7 @@ export function Sidebar() {
       <div className="px-3 pb-3">
         <Link
           href="/variants/BRCA1:c.5522G>T"
-          className="group relative block overflow-hidden rounded-2xl border border-line bg-gradient-to-b from-[#EEF0FF] to-[#F7F4FF] p-4 transition-shadow hover:shadow-[0_10px_28px_-18px_rgba(40,42,120,0.5)]"
+          className="group relative block overflow-hidden rounded-2xl border border-line bg-gradient-to-b from-[#FFF0F3] to-[#FDF3F5] p-4 transition-shadow hover:shadow-[0_10px_28px_-18px_rgba(40,42,120,0.5)]"
         >
           <HelixMotif className="pointer-events-none absolute -right-3 -top-4 h-28 w-24 opacity-70" />
           <p className="relative max-w-[8.5rem] text-[13.5px] font-semibold leading-snug tracking-tight text-ink">
@@ -159,9 +159,9 @@ function HelixMotif({ className }: { className?: string }) {
     <svg viewBox="0 0 80 110" fill="none" className={className} aria-hidden>
       <defs>
         <linearGradient id="vp-sidebar-strand" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#A5B4FC" />
-          <stop offset="50%" stopColor="#7C7CE8" />
-          <stop offset="100%" stopColor="#C4B5FD" />
+          <stop offset="0%" stopColor="#FCA5B4" />
+          <stop offset="50%" stopColor="#E14B6A" />
+          <stop offset="100%" stopColor="#F9A8B8" />
         </linearGradient>
       </defs>
       {[0, 1].map((strand) => (
@@ -185,7 +185,7 @@ function HelixMotif({ className }: { className?: string }) {
             y1={y}
             x2={x2}
             y2={y}
-            stroke="#B9BDF5"
+            stroke="#F3AFC0"
             strokeWidth="1.6"
             strokeLinecap="round"
             opacity={0.55}

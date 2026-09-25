@@ -4,31 +4,40 @@
    A light, low-noise clinical surface. One accent (indigo), three status
    colours, and a strict type scale. Nothing decorative earns a colour. */
 @theme {
-  --color-canvas: #eceef5;
-  --color-canvas-deep: #e4e7f1;
+  /* Neutrals carry a faint warm bias so they sit with the crimson accent
+     rather than against it. */
+  --color-canvas: #eeecef;
+  --color-canvas-deep: #e6e3e8;
   --color-surface: #ffffff;
-  --color-surface-2: #f8f9fc;
-  --color-surface-3: #f1f2f8;
+  --color-surface-2: #faf9fb;
+  --color-surface-3: #f3f1f4;
 
-  --color-ink: #12131a;
-  --color-ink-2: #3f414f;
-  --color-muted: #73758a;
-  --color-faint: #9a9cb0;
+  --color-ink: #17141a;
+  --color-ink-2: #46424c;
+  /* Every text tone clears 4.5:1 against the lightest surface it appears on,
+     including the canvas. Small uppercase labels are still "normal text" under
+     WCAG, so the faintest tone is held to the same bar; the hierarchy is
+     carried by size, case and tracking rather than by lightness alone. */
+  --color-muted: #5c5762;
+  --color-faint: #6d6874;
 
-  --color-line: #ebecf3;
-  --color-line-2: #dfe1ec;
+  --color-line: #ecebef;
+  --color-line-2: #e0dde3;
 
-  --color-accent: #5b5bd6;
-  --color-accent-hover: #4b4bc4;
-  --color-accent-soft: #eeeefc;
-  --color-accent-ring: #c9c9f5;
+  /* Accent is the deep crimson of the mark. It is deliberately a rose-leaning
+     red, held apart in hue from the vermillion used for critical status —
+     brand colour and alarm colour must never be confused in a triage tool. */
+  --color-accent: #b4123c;
+  --color-accent-hover: #960f32;
+  --color-accent-soft: #fdeef2;
+  --color-accent-ring: #f0b6c6;
 
-  --color-ok: #16a34a;
+  --color-ok: #117e39;
   --color-ok-soft: #e8f6ed;
-  --color-warn: #c77b12;
+  --color-warn: #9d610e;
   --color-warn-soft: #fdf3e2;
-  --color-crit: #d92d34;
-  --color-crit-soft: #fdeceD;
+  --color-crit: #d12222;
+  --color-crit-soft: #fdecea;
   --color-info: #2563eb;
   --color-info-soft: #eaf0fe;
 
@@ -80,8 +89,8 @@
     border: 1px solid var(--color-line);
     border-radius: var(--radius-card);
     box-shadow:
-      0 1px 2px rgba(18, 19, 26, 0.03),
-      0 10px 28px -20px rgba(18, 19, 40, 0.22);
+      0 1px 2px rgba(23, 20, 26, 0.03),
+      0 10px 28px -20px rgba(40, 20, 30, 0.2);
   }
 
   .vp-card-flat {
@@ -98,8 +107,8 @@
     border: 1px solid rgba(255, 255, 255, 0.9);
     border-radius: 18px;
     box-shadow:
-      0 1px 2px rgba(18, 19, 26, 0.04),
-      0 18px 40px -22px rgba(28, 30, 80, 0.38);
+      0 1px 2px rgba(23, 20, 26, 0.04),
+      0 18px 40px -22px rgba(70, 22, 40, 0.3);
   }
 
   .vp-hairline {

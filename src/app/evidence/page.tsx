@@ -12,8 +12,9 @@ import {
 } from "@/components/panels";
 import { SyncButton } from "@/components/sync";
 import { Badge, Card, ClassificationBadge, SectionHeading, StatusDot } from "@/components/ui";
-import { cn, formatDate, relativeTime } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { useWorkspace } from "@/state/workspace";
+import { RelativeTime } from "@/components/relative-time";
 
 export default function EvidencePage() {
   const { analysis, sync } = useWorkspace();
@@ -45,7 +46,9 @@ export default function EvidencePage() {
             {live ? "Reading live from ClinVar" : "Serving cached evidence"}
           </span>
         </span>
-        <span className="text-[12.5px] text-muted">Checked {relativeTime(lastChecked)}</span>
+        <span className="text-[12.5px] text-muted">
+          Checked <RelativeTime value={lastChecked} />
+        </span>
         <span className="text-[12.5px] text-muted">
           {analysis.assessments.length} variants on the monitored panel
         </span>
@@ -63,7 +66,7 @@ export default function EvidencePage() {
         </a>
       </Card>
 
-      <div className="grid gap-5 xl:grid-cols-[280px_1fr]">
+      <div className="grid gap-5 xl:grid-cols-[280px_minmax(0,1fr)]">
         <Card className="h-fit overflow-hidden">
           <div className="border-b border-line px-4 py-3">
             <SectionHeading title="Select a variant" icon={<Database className="h-4 w-4" />} />

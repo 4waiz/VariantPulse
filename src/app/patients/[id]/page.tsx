@@ -89,7 +89,7 @@ export default function PatientPage() {
         </Card>
       )}
 
-      <div className="grid gap-5 xl:grid-cols-[1fr_1fr]">
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <Card className="p-5">
           <SectionHeading title="Patient summary" icon={<UserRound className="h-4 w-4" />} />
           <dl className="mt-4 grid grid-cols-2 gap-x-5 gap-y-4">
@@ -189,7 +189,7 @@ export default function PatientPage() {
         </dl>
       </Card>
 
-      <div className="mt-5 grid gap-5 xl:grid-cols-[1fr_1fr]">
+      <div className="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <div className="space-y-5">
           <EvidenceSummaryPanel assessment={assessment} />
           <ReasoningPanel assessment={assessment} />

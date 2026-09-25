@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-24T21:34:10.667Z",
+  "generatedAt": "2026-09-25T06:20:59.563Z",
   "source": "NCBI ClinVar (E-utilities)",
   "sourceUrl": "https://www.ncbi.nlm.nih.gov/clinvar/",
   "recordCount": 12,
@@ -46,8 +46,8 @@
         },
         {
           "pmid": "31479213",
-          "title": "",
-          "journal": "",
+          "title": "Risk Assessment, Genetic Counseling, and Genetic Testing for BRCA1/2-Related Cancer in Women: A Systematic Review for the U.S. Preventive Services Task Force",
+          "journal": "Agency for Healthcare Research and Quality (US)",
           "year": "2019"
         },
         {
@@ -77,7 +77,7 @@
         {
           "pmid": "26389258",
           "title": "Cancer Genetics Risk Assessment and Counseling (PDQ®): Health Professional Version.",
-          "journal": "",
+          "journal": "National Cancer Institute (US)",
           "year": "2002"
         }
       ]
@@ -140,7 +140,7 @@
         {
           "pmid": "20301437",
           "title": "Hereditary Hyperekplexia Overview.",
-          "journal": "",
+          "journal": "University of Washington, Seattle",
           "year": "1993"
         }
       ]
@@ -268,13 +268,13 @@
         {
           "pmid": "26389258",
           "title": "Cancer Genetics Risk Assessment and Counseling (PDQ®): Health Professional Version.",
-          "journal": "",
+          "journal": "National Cancer Institute (US)",
           "year": "2002"
         },
         {
           "pmid": "26389210",
           "title": "Genetics of Breast and Gynecologic Cancers (PDQ®): Health Professional Version.",
-          "journal": "",
+          "journal": "National Cancer Institute (US)",
           "year": "2002"
         },
         {
@@ -298,7 +298,7 @@
         {
           "pmid": "20301488",
           "title": "Li-Fraumeni Syndrome.",
-          "journal": "",
+          "journal": "University of Washington, Seattle",
           "year": "1993"
         }
       ]
@@ -426,8 +426,8 @@
         },
         {
           "pmid": "31479213",
-          "title": "",
-          "journal": "",
+          "title": "Risk Assessment, Genetic Counseling, and Genetic Testing for BRCA1/2-Related Cancer in Women: A Systematic Review for the U.S. Preventive Services Task Force",
+          "journal": "Agency for Healthcare Research and Quality (US)",
           "year": "2019"
         },
         {
@@ -451,7 +451,7 @@
         {
           "pmid": "26389258",
           "title": "Cancer Genetics Risk Assessment and Counseling (PDQ®): Health Professional Version.",
-          "journal": "",
+          "journal": "National Cancer Institute (US)",
           "year": "2002"
         },
         {
@@ -530,8 +530,8 @@
         },
         {
           "pmid": "31479213",
-          "title": "",
-          "journal": "",
+          "title": "Risk Assessment, Genetic Counseling, and Genetic Testing for BRCA1/2-Related Cancer in Women: A Systematic Review for the U.S. Preventive Services Task Force",
+          "journal": "Agency for Healthcare Research and Quality (US)",
           "year": "2019"
         },
         {
@@ -617,13 +617,13 @@
         {
           "pmid": "26389505",
           "title": "Genetics of Colorectal Cancer (PDQ®): Health Professional Version.",
-          "journal": "",
+          "journal": "National Cancer Institute (US)",
           "year": "2002"
         },
         {
           "pmid": "26389258",
           "title": "Cancer Genetics Risk Assessment and Counseling (PDQ®): Health Professional Version.",
-          "journal": "",
+          "journal": "National Cancer Institute (US)",
           "year": "2002"
         }
       ]
@@ -682,19 +682,19 @@
         {
           "pmid": "26389505",
           "title": "Genetics of Colorectal Cancer (PDQ®): Health Professional Version.",
-          "journal": "",
+          "journal": "National Cancer Institute (US)",
           "year": "2002"
         },
         {
           "pmid": "26389258",
           "title": "Cancer Genetics Risk Assessment and Counseling (PDQ®): Health Professional Version.",
-          "journal": "",
+          "journal": "National Cancer Institute (US)",
           "year": "2002"
         },
         {
           "pmid": "26389210",
           "title": "Genetics of Breast and Gynecologic Cancers (PDQ®): Health Professional Version.",
-          "journal": "",
+          "journal": "National Cancer Institute (US)",
           "year": "2002"
         },
         {
